@@ -15,6 +15,7 @@ const topGames = [
     tag: 'ГОРЯЧЕЕ',
     tagColor: 'neon-text-magenta',
     cover: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=200&fit=crop',
+    gif: 'https://media.tenor.com/q1zy7isN0CAAAAAM/cyberpunk2077-cyberpunk.gif',
   },
   {
     rank: 2,
@@ -26,6 +27,7 @@ const topGames = [
     tag: 'ТОП',
     tagColor: 'rank-gold',
     cover: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=200&fit=crop',
+    gif: 'https://media.tenor.com/O9NvpCqGFloAAAAM/elden-ring-game.gif',
   },
   {
     rank: 3,
@@ -37,6 +39,7 @@ const topGames = [
     tag: 'ОЖИДАНИЕ',
     tagColor: 'neon-text-cyan',
     cover: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=400&h=200&fit=crop',
+    gif: 'https://media.tenor.com/OXFHCBQes8UAAAAM/gta6-gta.gif',
   },
   {
     rank: 4,
@@ -48,6 +51,7 @@ const topGames = [
     tag: 'НОВИНКА',
     tagColor: 'neon-text-yellow',
     cover: 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=400&h=200&fit=crop',
+    gif: 'https://media.tenor.com/MuDHbDJNqnoAAAAM/alan-wake2-alan-wake.gif',
   },
   {
     rank: 5,
@@ -59,6 +63,7 @@ const topGames = [
     tag: 'ЛЕГЕНДА',
     tagColor: 'rank-bronze',
     cover: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=200&fit=crop',
+    gif: 'https://media.tenor.com/IY8_3namjZAAAAAM/baldurs-gate3-bg3.gif',
   },
 ];
 
@@ -74,6 +79,7 @@ export default function Index() {
   const [activeTrailer, setActiveTrailer] = useState<string | null>(null);
   const [glitchActive, setGlitchActive] = useState(false);
   const [gifOpen, setGifOpen] = useState(false);
+  const [activeGif, setActiveGif] = useState<{ title: string; gif: string } | null>(null);
 
   const triggerGlitch = () => {
     setGlitchActive(true);
@@ -238,14 +244,23 @@ export default function Index() {
                     <div className="text-[#ff00ff]/40 text-xs font-orbitron">ИГРОКОВ</div>
                   </div>
 
-                  {/* Trailer Button */}
-                  <button
-                    className="neon-glow-btn shrink-0 flex items-center gap-2"
-                    onClick={() => setActiveTrailer(activeTrailer === game.trailer ? null : game.trailer)}
-                  >
-                    <Icon name={activeTrailer === game.trailer ? 'X' : 'Play'} size={12} />
-                    {activeTrailer === game.trailer ? 'Закрыть' : 'Трейлер'}
-                  </button>
+                  {/* Buttons */}
+                  <div className="flex gap-2 shrink-0 flex-wrap">
+                    <button
+                      className="neon-glow-btn flex items-center gap-2"
+                      onClick={() => setActiveTrailer(activeTrailer === game.trailer ? null : game.trailer)}
+                    >
+                      <Icon name={activeTrailer === game.trailer ? 'X' : 'Play'} size={12} />
+                      {activeTrailer === game.trailer ? 'Закрыть' : 'Трейлер'}
+                    </button>
+                    <button
+                      className="neon-glow-btn-magenta flex items-center gap-2"
+                      onClick={() => setActiveGif({ title: game.title, gif: game.gif })}
+                    >
+                      <Icon name="Clapperboard" size={12} />
+                      GIF
+                    </button>
+                  </div>
                 </div>
 
                 {/* Embedded Trailer */}
@@ -284,6 +299,40 @@ export default function Index() {
             ))}
           </div>
         </section>
+      )}
+
+      {/* GAME GIF MODAL */}
+      {activeGif && (
+        <div
+          className="fixed inset-0 z-[9999] flex items-center justify-center"
+          style={{ background: 'rgba(0,0,0,0.88)' }}
+          onClick={() => setActiveGif(null)}
+        >
+          <div
+            className="relative max-w-2xl w-full mx-4 cyber-card rounded-sm p-1 animate-fade-in-up"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between px-4 py-2 border-b border-[#00f5ff]/20">
+              <span className="font-orbitron text-xs text-[#00f5ff] tracking-widest">{activeGif.title.toUpperCase()} // GAMEPLAY</span>
+              <button className="text-white/40 hover:text-[#ff00ff] transition-colors" onClick={() => setActiveGif(null)}>
+                <Icon name="X" size={16} />
+              </button>
+            </div>
+            <div className="relative overflow-hidden" style={{ aspectRatio: '16/9' }}>
+              <img
+                src={activeGif.gif}
+                alt={activeGif.title}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 pointer-events-none border border-[#00f5ff]/20" />
+              <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-[#050510] to-transparent" />
+            </div>
+            <div className="px-4 py-3 flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-[#39ff14] animate-pulse" />
+              <span className="font-rajdhani text-white/40 text-sm tracking-wider">{activeGif.title.toUpperCase()} — LIVE ACTION</span>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* GIF MODAL */}

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Icon from '@/components/ui/icon';
+import CityBackground from '@/components/CityBackground';
 
 const HERO_BG = 'https://cdn.poehali.dev/projects/03783633-de5c-47b4-8998-4469c45e58cc/files/cb955d80-0505-41c7-aafa-206b76caf638.jpg';
 
@@ -82,12 +83,9 @@ export default function Index() {
     <div className="min-h-screen bg-cyber-dark scanlines" style={{ background: '#050510' }}>
       
       {/* HERO */}
-      <section className="relative h-[100vh] flex items-center justify-center overflow-hidden hero-grid">
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-20"
-          style={{ backgroundImage: `url(${HERO_BG})` }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#050510]/60 to-[#050510]" />
+      <section className="relative h-[100vh] flex items-center justify-center overflow-hidden">
+        <CityBackground />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050510]/40 via-transparent to-[#050510]" />
         
         {/* Animated corner decorations */}
         <div className="absolute top-8 left-8 w-16 h-16 border-l-2 border-t-2 border-[#00f5ff] opacity-60" />

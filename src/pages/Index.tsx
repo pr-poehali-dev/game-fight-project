@@ -73,6 +73,7 @@ export default function Index() {
   const [activeSection, setActiveSection] = useState<'ratings' | 'about'>('ratings');
   const [activeTrailer, setActiveTrailer] = useState<string | null>(null);
   const [glitchActive, setGlitchActive] = useState(false);
+  const [gifOpen, setGifOpen] = useState(false);
 
   const triggerGlitch = () => {
     setGlitchActive(true);
@@ -285,6 +286,43 @@ export default function Index() {
         </section>
       )}
 
+      {/* GIF MODAL */}
+      {gifOpen && (
+        <div
+          className="fixed inset-0 z-[9999] flex items-center justify-center"
+          style={{ background: 'rgba(0,0,0,0.88)' }}
+          onClick={() => setGifOpen(false)}
+        >
+          <div
+            className="relative max-w-3xl w-full mx-4 cyber-card rounded-sm p-1 animate-fade-in-up"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between px-4 py-2 border-b border-[#00f5ff]/20">
+              <span className="font-orbitron text-xs text-[#00f5ff] tracking-widest">CS2 // GAMEPLAY</span>
+              <button
+                className="text-white/40 hover:text-[#ff00ff] transition-colors"
+                onClick={() => setGifOpen(false)}
+              >
+                <Icon name="X" size={16} />
+              </button>
+            </div>
+            <div className="relative overflow-hidden" style={{ aspectRatio: '16/9' }}>
+              <img
+                src="https://media.tenor.com/YxnBi8UQDBQAAAAM/cs2-counter-strike.gif"
+                alt="CS2 Gameplay"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 pointer-events-none border border-[#00f5ff]/20" />
+              <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-[#050510] to-transparent" />
+            </div>
+            <div className="px-4 py-3 flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-[#39ff14] animate-pulse" />
+              <span className="font-rajdhani text-white/40 text-sm tracking-wider">COUNTER-STRIKE 2 — LIVE ACTION</span>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* ABOUT SECTION */}
       {activeSection === 'about' && (
         <section className="max-w-7xl mx-auto px-6 py-16">
@@ -353,6 +391,14 @@ export default function Index() {
               </button>
               <button className="neon-glow-btn">
                 Написать нам
+              </button>
+              <button
+                className="neon-glow-btn flex items-center gap-2"
+                style={{ borderColor: '#39ff14', color: '#39ff14', textShadow: '0 0 8px #39ff14', boxShadow: '0 0 12px rgba(57,255,20,0.3)' }}
+                onClick={() => setGifOpen(true)}
+              >
+                <Icon name="Gamepad2" size={12} />
+                CS2 в действии
               </button>
             </div>
           </div>
